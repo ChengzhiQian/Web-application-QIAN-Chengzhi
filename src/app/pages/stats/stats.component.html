@@ -1,0 +1,40 @@
+<section class="card">
+  <h2 style="text-align: center;">Stats</h2>
+  
+
+  <div class="chart-controls">
+    <button (click)="setChartType('bar')" [class.active]="chartType==='bar'">Bar</button>
+    <button (click)="setChartType('pie')" [class.active]="chartType==='pie'">Pie</button>
+  </div>
+
+
+
+  <div *ngIf="loading" class="muted">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="chart-wrap" [hidden]="loading || !!error">
+    <svg #genreChart></svg>
+  </div>
+
+  <p class="muted">Top 20 genres by number of games.</p>
+
+  <table *ngIf="!loading" class="table">
+    <thead>
+      <tr>
+        <th>Genre</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let g of genres">
+        <td>{{ g.genre }}</td>
+        <td class="mono">{{ g.n }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div *ngIf="!loading && genres.length === 0" class="muted">
+    No data.
+  </div>
+</section>

@@ -1,0 +1,50 @@
+<a class="back" routerLink="/search">← Back to Search</a>
+
+<section class="card" *ngIf="!loading && detail">
+  <div class="header">
+    <div class="cover">
+      <img *ngIf="detail.img" [src]="detail.img" alt="header" />
+      <div *ngIf="!detail.img" class="placeholder">No Image</div>
+    </div>
+
+    <div class="meta">
+      <h2>{{ detail.label }}</h2>
+      <div class="kv">
+        <div><span class="k">AppID</span><span class="v mono">{{ detail.appid }}</span></div>
+        <div><span class="k">Discount</span><span class="v">{{ detail.discount ?? '—' }}<span *ngIf="detail.discount !== null && detail.discount !== undefined">%</span></span></div>
+        <div><span class="k">DLC</span><span class="v">{{ detail.dlc ?? '—' }}</span></div>
+        <div><span class="k">Owners</span><span class="v">{{ detail.owners ?? '—' }}</span></div>
+        <div><span class="k">Peak CCU</span><span class="v">{{ detail.peak ?? '—' }}</span></div>
+        <div><span class="k">Required Age</span><span class="v">{{ detail.age ?? '—' }}</span></div>
+        <div><span class="k">User Score</span><span class="v">{{ detail.userScore ?? '—' }}</span></div>
+      </div>
+
+      <div class="tags">
+        <div class="tagline"><span class="k">Description</span>{{ detail.discription ?? '—' }}</div>
+        <div class="tagline"><span class="k">Genres</span> {{ detail.genres ?? '—' }}</div>
+        <div class="tagline"><span class="k">Developers</span> {{ detail.developers ?? '—' }}</div>
+        <div class="tagline"><span class="k">Publishers</span> {{ detail.publishers ?? '—' }}</div>
+        <div class="tagline"><span class="k">Languages</span> {{ detail.langs ?? '—' }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="loading" class="muted">Loading...</div>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+
+<section class="card" *ngIf="!loading && recos.length > 0">
+  <h3>Similar Games (by shared genres)</h3>
+  <div class="reco-grid">
+    <a class="reco" *ngFor="let r of recos" [routerLink]="['/detail', r.appid]">
+      <div class="reco-title">{{ r.label }}</div>
+      <div class="reco-sub">
+        <span class="mono">appid {{ r.appid }}</span>
+        <span>shared genres: {{ r.sharedGenres }}</span>
+      </div>
+    </a>
+  </div>
+</section>

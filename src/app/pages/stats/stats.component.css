@@ -1,0 +1,83 @@
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th, .table td {
+  border-top: 1px solid #e5e7eb;
+  padding: 10px;
+}
+
+.table th {
+  text-align: left;
+  font-size: 13px;
+  color: #374151;
+}
+
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.muted { color: #6b7280; }
+
+.error {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #991b1b;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 0 10px;
+}
+
+.chart-controls button {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.chart-controls button.active {
+  border-color: #111;
+  font-weight: 600;
+}
+
+.chart-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+svg {
+  display: block;
+}
+
+/* bar end value */
+.value {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+
+.error {
+  color: #b00020;
+  background: #ffeef0;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+.muted {
+  opacity: 0.7;
+}

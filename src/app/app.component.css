@@ -1,0 +1,67 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #f3f4f6;
+  font-size: 20px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav a {
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #111827;
+  border: 1px solid transparent;
+}
+
+.nav a:hover {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+.nav a.active {
+  background: #111827;
+  color: white;
+}
+
+.container {
+  padding: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}

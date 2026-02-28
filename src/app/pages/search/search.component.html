@@ -1,0 +1,71 @@
+<section class="card">
+  <h2 style="text-align: center;">Search Games</h2>
+
+  <div class="controls">
+    <input
+      type="text"
+      [(ngModel)]="q"
+      placeholder="keyword in label (e.g., war, quest, legend...)"
+      (keyup.enter)="doSearch(true)"
+    />
+
+    <button (click)="doSearch(true)" [disabled]="loading">Search</button>
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="muted">Loading...</div>
+
+  <table *ngIf="!loading" class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>AppID</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let it of items">
+        <td class="img">
+          <img *ngIf="it.img" [src]="it.img" alt="header" />
+          <span *ngIf="!it.img" class="muted">—</span>
+        </td>
+
+        <td class="mono">{{ it.appid }}</td>
+        <td>{{ it.label }}</td>
+
+        <td>
+        <span *ngIf="it.price !== null && it.price !== undefined">{{ it.price | number:'1.2-2' }}</span>
+        <span *ngIf="it.price === null || it.price === undefined" class="muted">—</span>
+        </td>
+
+        <td>
+          <span *ngIf="it.discount !== null && it.discount !== undefined">{{ it.discount }}%</span>
+          <span *ngIf="it.discount === null || it.discount === undefined" class="muted">—</span>
+        </td>
+
+        <td>
+          <a [routerLink]="['/detail', it.appid]">Detail →</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pager">
+    <button (click)="prevPage()" [disabled]="loading || offset === 0">Previous page</button>
+    <span class="pager-status">
+      {{ offset + 1 }}-{{ offset + items.length }} / {{ total }}
+    </span>
+    <button (click)="nextPage()" [disabled]="loading">Next page</button>
+  </div>
+
+  <div *ngIf="!loading && items.length === 0" class="muted">
+    No results.
+  </div>
+</section>
