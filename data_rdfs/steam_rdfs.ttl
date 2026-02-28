@@ -1,0 +1,198 @@
+@prefix :       <http://steam.com/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+#########
+# Classes
+#########
+
+schema:VideoGame a owl:Class .
+:Category a rdfs:Class .
+:Genre a rdfs:Class .
+:Supported_language a rdfs:Class .
+:Full_audio_languages a rdfs:Class .
+:Developer a rdfs:Class .
+:Publisher a rdfs:Class .
+
+:PlatformInfo a rdfs:Class .
+:PlaytimeInfo a rdfs:Class .
+:ReviewsInfo a rdfs:Class .
+:MetacriticInfo a rdfs:Class .
+:SupportInfo a rdfs:Class .
+
+############
+# Properties
+############
+
+# literals on schema:VideoGame
+:appid a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:achievements a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:discount a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:dlc_count a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:estimated_owners a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:string .
+
+:peak_ccu a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:required_age a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+:user_score a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:int .
+
+# IRIs (links) on schema:VideoGame
+:header_image a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  rdfs:Resource .
+
+:screenshots a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  rdfs:Resource .
+
+# object-valued properties (IRI-based values)
+:categories a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Category .
+
+:genres a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Genre .
+
+:developers a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Developer .
+
+:publishers a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Publisher .
+
+:supported_languages a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Supported_language .
+
+:full_audio_languages a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :Full_audio_languages .
+
+# blank-node structures
+:metacritic a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :MetacriticInfo .
+
+:support a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :SupportInfo .
+
+:platforms a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :PlatformInfo .
+
+:playtime a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :PlaytimeInfo .
+
+:reviews a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  :ReviewsInfo .
+
+#################################################################
+# Properties inside the blank nodes
+#################################################################
+
+# MetacriticInfo
+:metacritic_score a rdf:Property ;
+  rdfs:domain :MetacriticInfo ;
+  rdfs:range  xsd:int .
+
+# PlatformInfo
+:linux a rdf:Property ;
+  rdfs:domain :PlatformInfo ;
+  rdfs:range  xsd:boolean .
+
+:mac a rdf:Property ;
+  rdfs:domain :PlatformInfo ;
+  rdfs:range  xsd:boolean .
+
+:windows a rdf:Property ;
+  rdfs:domain :PlatformInfo ;
+  rdfs:range  xsd:boolean .
+
+#SupportInfo
+:support_url a rdf:Property ;
+  rdfs:domain :SupportInfo ;
+  rdfs:range  rdfs:Resource .
+
+:support_email a rdf:Property ;
+  rdfs:domain :SupportInfo ;
+  rdfs:range  xsd:string .
+
+# PlaytimeInfo
+:average_playtime_2weeks a rdf:Property ;
+  rdfs:domain :PlaytimeInfo ;
+  rdfs:range  xsd:int .
+
+:average_playtime_forever a rdf:Property ;
+  rdfs:domain :PlaytimeInfo ;
+  rdfs:range  xsd:int .
+
+:median_playtime_2weeks a rdf:Property ;
+  rdfs:domain :PlaytimeInfo ;
+  rdfs:range  xsd:int .
+
+:median_playtime_forever a rdf:Property ;
+  rdfs:domain :PlaytimeInfo ;
+  rdfs:range  xsd:int .
+
+# ReviewsInfo
+:negative a rdf:Property ;
+  rdfs:domain :ReviewsInfo ;
+  rdfs:range  xsd:int .
+
+:positive a rdf:Property ;
+  rdfs:domain :ReviewsInfo ;
+  rdfs:range  xsd:int .
+
+:recommendations a rdf:Property ;
+  rdfs:domain :ReviewsInfo ;
+  rdfs:range  xsd:int .
+
+#################################################################
+# schema.org properties used in this instance (optional but helpful)
+#################################################################
+
+schema:datePublished a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:date .
+
+schema:description a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:string .
+
+schema:price a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  xsd:double .
+
+schema:url a rdf:Property ;
+  rdfs:domain schema:VideoGame ;
+  rdfs:range  rdfs:Resource .
