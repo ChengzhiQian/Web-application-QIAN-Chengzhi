@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPARQL Query</title>
+
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ktym/d3sparql/d3sparql.js"></script>
+
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 16px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; }
+    label { font-weight: 600; display: block; margin: 8px 0 6px; }
+    input, textarea, select, button { width: 100%; box-sizing: border-box; }
+    input, select, button { height: 36px; }
+    textarea { min-height: 180px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    button { cursor: pointer; font-weight: 700; }
+    #result { margin-top: 14px; }
+    .hint { color: #666; font-size: 12px; margin-top: 6px; }
+    .error { color: #b00020; white-space: pre-wrap; }
+  </style>
+</head>
+
+<body>
+  <h2>SPARQL Query + D3 Visualization</h2>
+
+  <div class="row">
+    <div class="card" style="flex: 1 1 380px; min-width: 320px;">
+      <label>SPARQL Endpoint</label>
+      <input id="endpoint" value="http://127.0.0.1:3030/steam/sparql" />
+
+      <label>Visualisation type</label>
+      <select id="viz">
+        <option value="table">Table</option>
+        <option value="bar">Bar chart</option>
+        <option value="force">Force graph</option>
+      </select>
+
+      <div class="row" style="margin-top:10px;">
+        <button onclick="execQuery()" style="flex:1;">Run Query</button>
+        <button onclick="loadExample()" style="flex:1;">Load Example</button>
+      </div>
+    </div>
+
+    <div class="card" style="flex: 2 1 560px; min-width: 320px;">
+      <label>SPARQL Query</label>
+      <textarea id="sparql"></textarea>
+    </div>
+  </div>
+
+  <div id="status" style="margin-top:10px;"></div>
+  <div id="result" class="card"></div>
+
+<script>
+  document.getElementById("sparql").value =
+`SELECT ?s ?p ?o
+WHERE {
+  ?s ?p ?o
+}
+LIMIT 50`;
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("status");
+    el.className = isError ? "error" : "";
+    el.textContent = msg || "";
+  }
+
+  function execQuery() {
+
+    var endpoint = document.getElementById("endpoint").value.trim();
+    var sparql = document.getElementById("sparql").value;
+    var viz = document.getElementById("viz").value;
+
+    // d3sparql.debug = true;
+
+    try {
+      d3sparql.query(endpoint, sparql, function (json) {
+        setStatus("", false);
+        render(json, viz);
+      });
+    } catch (e) {
+      setStatus("Failed to execute query：\n" + (e && e.stack ? e.stack : e), true);
+    }
+  }
+
+  function render(json, viz) {
+    d3.select("#result").html("");
+
+    if (viz === "table") {
+      d3sparql.htmltable(json, { selector: "#result" });
+      return;
+    }
+
+    if (viz === "bar") {
+      d3sparql.barchart(json, {
+        selector: "#result",
+        width: 900,
+        height: 420,
+        margin: 60,
+        label_x: "label",
+        label_y: "value"
+      });
+      return;
+    }
+
+    if (viz === "force") {
+      d3sparql.forcegraph(json, {
+        selector: "#result",
+        width: 900,
+        height: 520,
+        radius: 7,
+        charge: -350,
+        linkDistance: 80
+      });
+      return;
+    }
+  }
+
+  function loadExample() {
+    var viz = document.getElementById("viz").value;
+    if (viz === "table") {
+      document.getElementById("sparql").value =
+`SELECT ?s ?p ?o
+WHERE {
+  ?s ?p ?o
+}
+LIMIT 50`;
+      return;
+    }
+
+    if (viz === "bar") {
+      document.getElementById("sparql").value =
+`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (STR(?type) AS ?label) (COUNT(?s) AS ?value)
+WHERE {
+  ?s rdf:type ?type .
+}
+GROUP BY ?type
+ORDER BY DESC(?value)
+LIMIT 15`;
+      return;
+    }
+
+    if (viz === "force") {
+      document.getElementById("sparql").value =
+`SELECT (STR(?s) AS ?source) (STR(?o) AS ?target) (1 AS ?value)
+WHERE {
+  ?s ?p ?o .
+  FILTER(isIRI(?o))
+}
+LIMIT 80`;
+      return;
+    }
+  }
+</script>
+</body>
+</html>
